@@ -42,21 +42,52 @@ class Node {
     swapWithParent() {
         let temp;
         if (this.parent) {
-            //left
-            temp = this.left;
-            this.left = this.parent;
-            this.parent.left = temp;
-            //right
-            temp = this.right;
-            this.right = this.parent.right;
-            this.parent.right = temp;
-            /*  //parent
-              temp = this.parent.parent;
-              this.parent.parent = this.parent;
-              this.parent = temp;*/
-
-
-
+            //left and tight from thisChild
+            if (this.left) {
+                this.left.parent = this.parent;
+            }
+            if (this.right) {
+                this.right.parent = this.parent;
+            }
+            if (this.parent.left == this) {
+                //right fron Parent
+                if (this.parent.right) {
+                    this.parent.right.parent = this;
+                }
+                //left
+                temp = this.left;
+                this.left = this.parent;
+                this.parent.left = temp;
+                //right
+                temp = this.right;
+                this.right = this.parent.right;
+                this.parent.right = temp;
+            } else {
+                //left fron Parent
+                if (this.parent.left) {
+                    this.parent.left.parent = this;
+                }
+                //left
+                temp = this.left;
+                this.left = this.parent.left;
+                this.parent.left = temp;
+                //right
+                temp = this.right;
+                this.right = this.parent;
+                this.parent.right = temp;
+            }
+            if (this.parent.parent) {
+                if (this.parent == this.parent.parent.left) {
+                    //parent
+                    this.parent.parent.left = this;
+                } else {
+                    //parent
+                    this.parent.parent.right = this;
+                }
+            }
+            temp = this.parent.parent;
+            this.parent.parent = this;
+            this.parent = temp;
         }
     }
 }
