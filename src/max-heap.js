@@ -59,7 +59,30 @@ class MaxHeap {
     }
 
     shiftNodeUp(node) {
-
+        let numNode = 0;
+        let numPar = 0;
+        let temp;
+        if (node.parent) {
+            if (node.priority > node.parent.priority) {
+                numNode = this.parentNodes.indexOf(node);
+                numPar = this.parentNodes.indexOf(node.parent);
+                if ((numNode !== -1) && (numPar !== -1)) {
+                    temp = this.parentNodes[numNode];
+                    this.parentNodes[numNode] = this.parentNodes[numPar];
+                    this.parentNodes[numPar] = temp;
+                }
+                if ((numNode !== -1) && (numPar === -1)) {
+                    this.parentNodes[numNode] = node.parent;
+                }
+                if ((numNode === -1) && (numPar !== -1)) {
+                    this.parentNodes[numPar] = node;
+                }
+                node.swapWithParent();
+                this.shiftNodeUp(node);
+            }
+        } else {
+            this.root = node;
+        }
     }
 
     shiftNodeDown(node) {
