@@ -1,7 +1,7 @@
 class Node {
     constructor(data, priority) {
         this.data = data;
-        this.priority = priority;
+        this.priority = priority || 0;
         this.parent = null;
         this.left = null;
         this.right = null;
